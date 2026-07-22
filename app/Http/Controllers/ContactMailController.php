@@ -146,7 +146,7 @@ class ContactMailController extends Controller
                         'name' => 'RJ David'
                     ]
                 ],
-                'subject' => 'New Contact Message from '.$fields['name'],
+                'subject' => $fields['subject'],
                 'htmlContent' => "
                     <p>Dear Mr. David</p>
 
