@@ -8,5 +8,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/contact-mail', [ContactMailControllerr::class, 'mail']);
+Route::get('/contact-mail', [ContactMailController::class, 'mail']);
 Route::post('/contact-mail', [ContactMailController::class, 'mail']);

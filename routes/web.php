@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ContactMailController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->json([
+        'message' => 'Laravel API is running'
+    ]);
 });
-
-// Route::get('/contact-mail', [ContactMailController::class, 'mail']);
