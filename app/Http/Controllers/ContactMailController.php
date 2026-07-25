@@ -94,42 +94,42 @@ class ContactMailController extends Controller
             //     "
             // ]);
 
-            Http::withHeaders([
-                'api-key' => env('BREVO_API_KEY'),
-                'Content-Type' => 'application/json',
-            ])->post('https://api.brevo.com/v3/smtp/email', [
-                'sender' => [
-                    'name' => env('MAIL_FROM_NAME'),
-                    'email' => env('MAIL_FROM_ADDRESS')
-                ],
-                'to' => [
-                    [
-                        'email' => $fields['email'],
-                        'name' => $fields['name']
-                    ]
-                ],
-                'subject' => 'Message Received Successfully',
-                'htmlContent' => "
-                    <p>Dear {$fields['name']}</p>
+            // Http::withHeaders([
+            //     'api-key' => env('BREVO_API_KEY'),
+            //     'Content-Type' => 'application/json',
+            // ])->post('https://api.brevo.com/v3/smtp/email', [
+            //     'sender' => [
+            //         'name' => env('MAIL_FROM_NAME'),
+            //         'email' => env('MAIL_FROM_ADDRESS')
+            //     ],
+            //     'to' => [
+            //         [
+            //             'email' => $fields['email'],
+            //             'name' => $fields['name']
+            //         ]
+            //     ],
+            //     'subject' => 'Message Received Successfully',
+            //     'htmlContent' => "
+            //         <p>Dear {$fields['name']}</p>
 
-                    <p>
-                        Thank you for reaching out!
-                    </p>
+            //         <p>
+            //             Thank you for reaching out!
+            //         </p>
 
-                    <p>
-                        This email is to confirm that I have successfully received your message.
-                        I'll review it and get back to you as soon as I can.
-                    </p>
+            //         <p>
+            //             This email is to confirm that I have successfully received your message.
+            //             I'll review it and get back to you as soon as I can.
+            //         </p>
 
-                    <p>
-                        Best regards,
-                    </p>
+            //         <p>
+            //             Best regards,
+            //         </p>
 
-                    <p>
-                        Ricardo Jose David
-                    </p>
-                "
-            ]);
+            //         <p>
+            //             Ricardo Jose David
+            //         </p>
+            //     "
+            // ]);
 
 
             Http::withHeaders([
