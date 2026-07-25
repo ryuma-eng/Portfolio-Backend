@@ -94,32 +94,6 @@ class ContactMailController extends Controller
             //     "
             // ]);
 
-            $response = Http::timeout(10)
-                ->withHeaders([
-                    'api-key' => env('BREVO_API_KEY'),
-                    'Content-Type' => 'application/json',
-                ])
-                ->post('https://api.brevo.com/v3/smtp/email', [
-                    'sender' => [
-                        'name' => env('MAIL_FROM_NAME'),
-                        'email' => env('MAIL_FROM_ADDRESS')
-                    ],
-                    'to' => [
-                        [
-                            'email' => $fields['email'],
-                            'name' => $fields['name']
-                        ]
-                    ],
-                    'subject' => 'Message Received Successfully',
-                    'htmlContent' => '<p>Email received</p>'
-                ]);
-
-
-            if(!$response->successful()){
-                throw new Exception($response->body());
-            }
-
-
             // Http::withHeaders([
             //     'api-key' => env('BREVO_API_KEY'),
             //     'Content-Type' => 'application/json',
@@ -130,31 +104,69 @@ class ContactMailController extends Controller
             //     ],
             //     'to' => [
             //         [
-            //             'email' => env('MAIL_FROM_ADDRESS'),
-            //             'name' => 'RJ David'
+            //             'email' => $fields['email'],
+            //             'name' => $fields['name']
             //         ]
             //     ],
-            //     'subject' => $fields['subject'],
+            //     'subject' => 'Message Received Successfully',
             //     'htmlContent' => "
-            //         <p>Dear Mr. David</p>
+            //         <p>Dear {$fields['name']}</p>
 
             //         <p>
-            //             {$fields['message']}
+            //             Thank you for reaching out!
             //         </p>
 
             //         <p>
-            //             Best Regards,
+            //             This email is to confirm that I have successfully received your message.
+            //             I'll review it and get back to you as soon as I can.
             //         </p>
 
             //         <p>
-            //             {$fields['name']}
+            //             Best regards,
             //         </p>
 
             //         <p>
-            //             {$fields['email']}
+            //             Ricardo Jose David
             //         </p>
             //     "
             // ]);
+
+
+            Http::withHeaders([
+                'api-key' => env('BREVO_API_KEY'),
+                'Content-Type' => 'application/json',
+            ])->post('https://api.brevo.com/v3/smtp/email', [
+                'sender' => [
+                    'name' => env('MAIL_FROM_NAME'),
+                    'email' => env('MAIL_FROM_ADDRESS')
+                ],
+                'to' => [
+                    [
+                        'email' => env('MAIL_FROM_ADDRESS'),
+                        'name' => 'RJ David'
+                    ]
+                ],
+                'subject' => $fields['subject'],
+                'htmlContent' => "
+                    <p>Dear Mr. David</p>
+
+                    <p>
+                        {$fields['message']}
+                    </p>
+
+                    <p>
+                        Best Regards,
+                    </p>
+
+                    <p>
+                        {$fields['name']}
+                    </p>
+
+                    <p>
+                        {$fields['email']}
+                    </p>
+                "
+            ]);
 
             return response()->json([
                 'message' => 'Emails sent successfully.'
